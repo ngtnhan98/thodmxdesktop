@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Dịch vụ - Thợ Điện Máy XANH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Inter', sans-serif !important;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background: #f0f2f5;
+
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .nav-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 82px;
+      padding: 4px 14px 0;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color .2s;
+    }
+
+    .nav-item:hover {
+      color: #FFC107;
+    }
+
+    .nav-item.active {
+      font-weight: 700;
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #FFC107;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .bullet {
+      width: 13px;
+      height: 13px;
+      background: #FFC107;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .store-btn img {
+      border-radius: 10px;
+      height: 52px;
+      width: auto;
+      display: block;
+    }
+
+    .store-btn:hover img {
+      opacity: .85;
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .25);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+      z-index: 10;
+    }
+
+    .nav-arrow:hover {
+      background: rgba(255, 255, 255, .5);
+    }
+
+    .dot {
+      height: 8px;
+      width: 8px;
+      background: rgba(255, 255, 255, .45);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .3s;
+      flex-shrink: 0;
+    }
+
+    .dot.on {
+      background: white;
+      width: 24px;
+    }
+
+    .slide-item {
+      min-width: 100%;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+
+
+
+
+
+
+
+
+
+    /* ===== Card ===== */
+    .reminder-card {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 520px;
+      z-index: 10;
+      border-radius: 24px;
+      padding: 22px 22px 18px;
+      overflow: hidden;
+      background:
+        radial-gradient(120% 80% at 10% 0%, #cfe6ff 0%, transparent 60%),
+        radial-gradient(120% 80% at 100% 10%, #d9d0ff 0%, transparent 55%),
+        linear-gradient(135deg, #e6f1ff 0%, #f1ebff 100%);
+      box-shadow:
+        0 10px 30px rgba(99, 130, 255, 0.18),
+        0 2px 6px rgba(99, 130, 255, 0.08);
+    }
+
+    /* Decorative sparkles */
+    .reminder-card::before,
+    .reminder-card::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.9),
+        30px -10px 0 -2px rgba(255, 255, 255, 0.85),
+        60px 8px 0 -3px rgba(255, 255, 255, 0.7),
+        -20px 20px 0 -2px rgba(255, 255, 255, 0.7);
+      pointer-events: none;
+    }
+
+    .reminder-card::before {
+      top: 55%;
+      left: 12px;
+      right: auto;
+      opacity: 0.6;
+    }
+
+    .reminder-card::after {
+      top: 72%;
+      left: 36%;
+      right: auto;
+      opacity: 0.5;
+    }
+
+    /* ===== Header ===== */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      /* right padding reserves space for the robot wrap */
+      padding: 6px 70px 18px 4px;
+      position: relative;
+    }
+
+    /* ===== Header icon (left) with glowing rotating border ===== */
+    .header-icon {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      isolation: isolate;
+      animation: iconBob 2.4s ease-in-out infinite;
+    }
+
+    .header-icon::before {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg,
+          #6aa9ff, #8ec5ff, #b39bff,
+          #ff8fd1, #7ad7ff, #6aa9ff);
+      animation: rotateRing 3s linear infinite;
+      filter: blur(2px);
+      z-index: -2;
+    }
+
+    .header-icon::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6aa9ff, #8c7bff);
+      box-shadow:
+        0 4px 14px rgba(106, 169, 255, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      z-index: -1;
+    }
+
+    .header-icon svg {
+      width: 22px;
+      height: 22px;
+      animation: iconPulse 2s ease-in-out infinite;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+    }
+
+    @keyframes rotateRing {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes iconBob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-3px);
+      }
+    }
+
+    @keyframes iconPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+      white-space: nowrap;
+      background: linear-gradient(90deg, #2b6cff 0%, #8c5bff 50%, #2b6cff 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleShimmer 4s linear infinite;
+    }
+
+    @keyframes titleShimmer {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 200% 50%;
+      }
+    }
+
+    /* ===== Right-side AI mascot robot ===== */
+    .header-robot-wrap {
+      position: absolute;
+      top: 16px;
+      right: -10px;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: robotFloat 3.4s ease-in-out infinite;
+    }
+
+    /* Soft ambient halo */
+    .header-robot-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 2px border-radius: 50%;
+      background: radial-gradient(circle,
+          rgba(0, 229, 255, 0.3) 0%,
+          rgba(140, 99, 255, 0.2) 45%,
+          transparent 70%);
+      animation: haloPulse 2.8s ease-in-out infinite;
+      filter: blur(7px);
+      z-index: 0;
+    }
+
+    /* Spinning sparkle ring */
+    .header-robot-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle 2.5px at 50% 0%, #00e5ff 0%, transparent 100%),
+        radial-gradient(circle 2px at 100% 50%, #b39bff 0%, transparent 100%),
+        radial-gradient(circle 2.5px at 50% 100%, #7ad7ff 0%, transparent 100%),
+        radial-gradient(circle 2px at 0% 50%, #ffffff 0%, transparent 100%);
+      animation: rotateRing 5s linear infinite reverse;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .header-robot {
+      position: relative;
+      width: 25px;
+      height: auto;
+      object-fit: contain;
+      z-index: 1;
+      filter:
+        drop-shadow(0 3px 12px rgba(0, 180, 255, 0.5)) drop-shadow(0 6px 20px rgba(140, 99, 255, 0.32));
+    }
+
+    @keyframes robotFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-1.5deg);
+      }
+
+      50% {
+        transform: translateY(-5px) rotate(1.5deg);
+      }
+    }
+
+    @keyframes haloPulse {
+
+      0%,
+      100% {
+        opacity: 0.7;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.18);
+      }
+    }
+
+    /* ===== Orbiting comet border ===== */
+    .border-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: conic-gradient(from var(--angle, 0deg),
+          transparent 0deg, transparent 260deg,
+          rgba(91, 63, 184, 0.4) 280deg,
+          rgba(140, 80, 230, 0.7) 300deg,
+          rgba(196, 109, 255, 0.9) 320deg,
+          rgba(232, 181, 255, 0.98) 338deg,
+          rgba(255, 208, 232, 1) 350deg,
+          rgba(255, 240, 250, 1) 357deg,
+          transparent 360deg);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: borderSweep 4s linear infinite;
+      pointer-events: none;
+      z-index: 3;
+      filter:
+        drop-shadow(0 0 4px rgba(255, 220, 245, 0.95)) drop-shadow(0 0 10px rgba(196, 109, 255, 0.85)) drop-shadow(0 0 20px rgba(91, 63, 184, 0.65));
+    }
+
+    @property --angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes borderSweep {
+      from {
+        --angle: 0deg;
+      }
+
+      to {
+        --angle: 360deg;
+      }
+    }
+
+
+    /* ===== MASCOT ANIMATIONS ===== */
+    .mascot-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      /* Breathing effect (slight stretch and squash) */
+      animation: breathe 3s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    @keyframes breathe {
+      0% {
+        transform: scaleY(1) scaleX(1);
+      }
+
+      50% {
+        transform: scaleY(1.02) scaleX(0.99);
+      }
+
+      100% {
+        transform: scaleY(1) scaleX(1);
+      }
+    }
+
+    /* ===== List ===== */
+    .reminder-list {
+      position: relative;
+      background: rgba(255, 255, 255, 1);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 18px;
+      padding: 6px 0;
+      box-shadow: 0 4px 14px rgba(99, 130, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .reminder-list-content {
+      max-height: 280px;
+      overflow-y: auto;
+      padding: 0 14px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .reminder-list-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.95) 80%);
+      pointer-events: none;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 6px;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .scroll-cue.hidden {
+      opacity: 0;
+    }
+
+    .scroll-cue svg {
+      width: 18px;
+      height: 18px;
+      fill: #8c5bff;
+      animation: cueBounce 1.5s infinite;
+    }
+
+    @keyframes cueBounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(5px);
+      }
+    }
+
+    .reminder-item {
+      display: grid !important;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      gap: 6px 12px;
+      align-items: center;
+      padding: 14px 6px;
+      border-bottom: 1px solid rgba(180, 200, 230, 0.45);
+    }
+
+    .reminder-item:last-child {
+      border-bottom: none;
+    }
+
+    .item-image {
+      grid-row: 1 / 3;
+      width: 56px;
+      height: 70px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .item-image svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .item-content {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a2940;
+      margin: 0 0 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-meta {
+      font-size: 14px;
+      color: #4a5b78;
+      margin: 0;
+    }
+
+    .item-meta .highlight {
+      color: #ff3838;
+      font-weight: 600;
+    }
+
+    /* ===== AI Button ===== */
+    .ai-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      overflow: hidden;
+      isolation: isolate;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 6px 18px rgba(99, 130, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      background: linear-gradient(120deg, #6aa9ff 0%, #8ec5ff 25%, #b39bff 55%, #7aa8ff 80%, #6aa9ff 100%);
+      background-size: 250% 100%;
+      animation: gradientFlow 4s linear infinite;
+      transition: transform .25s ease, box-shadow .25s ease;
+      font-family: inherit;
+    }
+
+    .ai-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ai-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      animation: shine 3.2s ease-in-out infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .ai-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 10px 24px rgba(99, 130, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .ai-btn:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .ai-btn .label,
+    .ai-btn .sparkle {
+      position: relative;
+      z-index: 3;
+    }
+
+    .ai-btn .sparkle {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      animation: twinkle 1.8s ease-in-out infinite;
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+    }
+
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 250% 50%;
+      }
+    }
+
+    @keyframes shine {
+      0% {
+        left: -60%;
+      }
+
+      60% {
+        left: 120%;
+      }
+
+      100% {
+        left: 120%;
+      }
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.25) rotate(15deg);
+        opacity: 0.85;
+      }
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      transform: scale(0);
+      animation: rippleAnim 0.6s ease-out;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 520px) {
+      .reminder-card {
+        padding: 18px 14px 14px;
+        border-radius: 20px;
+      }
+
+      .card-header {
+        padding-right: 68px;
+      }
+
+      .header-title {
+        font-size: 16px;
+      }
+
+      .header-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .header-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-robot-wrap {
+        width: 62px;
+        height: 62px;
+        top: -7px;
+        right: -3px;
+      }
+
+      .header-robot {
+        width: 54px;
+        height: 54px;
+      }
+
+      .item-image {
+        width: 46px;
+        height: 58px;
+      }
+
+      .item-title {
+        font-size: 14px;
+      }
+
+      .item-meta {
+        font-size: 12px;
+      }
+
+      .ai-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+      }
+    }
+
+    /* ============================================================
+       POPUP DEVICE LIST (triggered from weather card)
+    ============================================================ */
+    .weather-devices-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2b6cff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .weather-devices-toggle:hover {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 8px rgba(43, 108, 255, 0.15);
+    }
+
+    .weather-devices-toggle .toggle-arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      font-size: 11px;
+    }
+
+    .weather-devices-toggle.open .toggle-arrow {
+      transform: rotate(180deg);
+    }
+
+    .weather-devices-toggle .device-count {
+      background: #e53e3e;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 99px;
+      line-height: 1.4;
+    }
+
+    /* Backdrop */
+    .device-popup-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .device-popup-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Popup */
+    .device-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
+      width: 420px;
+      max-width: 92vw;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+    }
+
+    .device-popup.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Responsive popup -> bottom sheet on mobile */
+    @media (max-width: 600px) {
+      .device-popup {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        transform: translateY(100%);
+        width: 100%;
+        max-width: 100%;
+        border-radius: 24px 24px 0 0;
+      }
+      .device-popup.open {
+        transform: translateY(0);
+      }
+    }
+
+    .popup-header {
+      background: linear-gradient(135deg, #fff7ed 0%, #fff 100%);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f0e6d2;
+    }
+
+    .popup-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .popup-header-temp {
+      font-size: 22px;
+      font-weight: 800;
+      color: #ff4500;
+    }
+
+    .popup-header-text {
+      font-size: 13px;
+      color: #4a5568;
+      line-height: 1.4;
+    }
+
+    .popup-header-text strong {
+      color: #e53e3e;
+    }
+
+    .popup-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .popup-close:hover {
+      background: #eee;
+    }
+
+    .popup-body {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 4px 20px 16px;
+    }
+
+    .popup-body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .popup-body::-webkit-scrollbar-thumb {
+      background: #d0d5dd;
+      border-radius: 4px;
+    }
+
+    .wdl-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f4fa;
+    }
+
+    .wdl-item:last-child {
+      border-bottom: none;
+    }
+
+    .wdl-item-icon {
+      width: 40px;
+      height: 40px;
+      background: #f8fafc;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 7px;
+    }
+
+    .wdl-item-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .wdl-item-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .wdl-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a202c;
+      margin: 0;
+    }
+
+    .wdl-item-sub {
+      font-size: 12px;
+      color: #718096;
+      margin: 2px 0 0;
+    }
+
+    .wdl-item-sub span {
+      color: #e53e3e;
+      font-weight: 600;
+    }
+
+    .wdl-book {
+      background: #2b6cff;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .wdl-book:hover {
+      background: #1a56db;
+    }
+
+    /* ============================================================
+       BASE WEATHER CARD
+    ============================================================ */
+    .weather-card {
+      position: relative;
+      width: 100%;
+      border-radius: 18px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(60, 90, 160, 0.08);
+      isolation: isolate;
+    }
+
+    /* Left column: weather info */
+    .weather-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+      min-width: 180px;
+    }
+
+    .weather-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .weather-icon {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .weather-temp {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .weather-location {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: #5a6a85;
+      margin-top: 6px;
+    }
+
+    .weather-location svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .weather-update {
+      font-size: 12px;
+      color: #8090ac;
+      margin-top: 2px;
+    }
+
+    /* Middle column: description */
+    .weather-desc {
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #2b3a55;
+    }
+
+    .weather-desc .hl {
+      font-weight: 700;
+    }
+
+    .weather-link {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .weather-link:hover {
+      opacity: 0.75;
+    }
+
+    .weather-link::after {
+      content: " ›";
+      font-weight: 700;
+    }
+
+    /* Right column: robot mascot */
+    .weather-robot {
+      width: 76px;
+      height: 76px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .weather-robot svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 8px rgba(60, 90, 160, 0.25));
+      animation: robotFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes robotFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-2deg);
+      }
+
+      50% {
+        transform: translateY(-3px) rotate(2deg);
+      }
+    }
+
+    /* ============================================================
+       VARIANT 1: HOT / SUNNY
+    ============================================================ */
+    .weather-hot {
+      background:
+        radial-gradient(120% 80% at 0% 0%, #fff3d6 0%, transparent 55%),
+        radial-gradient(120% 80% at 100% 100%, #ffe2e2 0%, transparent 55%),
+        linear-gradient(135deg, #f4f8ff 0%, #fdf3ff 100%);
+    }
+
+    .weather-hot .weather-temp {
+      color: #ff5b2b;
+    }
+
+    .weather-hot .hl {
+      color: #ff5b2b;
+    }
+
+    .weather-hot .weather-link {
+      color: #2b6cff;
+    }
+
+    /* Sun icon with rays */
+    .sun-icon {
+      position: relative;
+      width: 38px;
+      height: 38px;
+    }
+
+    .sun-icon .sun-core {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffe07a 0%, #ffb742 60%, #ff8a2b 100%);
+      box-shadow: 0 0 12px rgba(255, 167, 50, 0.6);
+      animation: sunPulse 2.5s ease-in-out infinite;
+    }
+
+    .sun-icon .sun-ray {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      margin-left: -1.5px;
+      width: 3px;
+      height: 8px;
+      background: linear-gradient(to bottom, #ffb742, transparent);
+      border-radius: 2px;
+      transform-origin: 50% 19px;
+    }
+
+    .sun-icon .sun-ray:nth-child(1) {
+      transform: rotate(0deg);
+    }
+
+    .sun-icon .sun-ray:nth-child(2) {
+      transform: rotate(45deg);
+    }
+
+    .sun-icon .sun-ray:nth-child(3) {
+      transform: rotate(90deg);
+    }
+
+    .sun-icon .sun-ray:nth-child(4) {
+      transform: rotate(135deg);
+    }
+
+    .sun-icon .sun-ray:nth-child(5) {
+      transform: rotate(180deg);
+    }
+
+    .sun-icon .sun-ray:nth-child(6) {
+      transform: rotate(225deg);
+    }
+
+    .sun-icon .sun-ray:nth-child(7) {
+      transform: rotate(270deg);
+    }
+
+    .sun-icon .sun-ray:nth-child(8) {
+      transform: rotate(315deg);
+    }
+
+    @keyframes sunPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 12px rgba(255, 167, 50, 0.6);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 20px rgba(255, 167, 50, 0.9);
+        transform: scale(1.05);
+      }
+    }
+
+    /* Apply rotation to the whole rays group via a wrapper */
+    .sun-icon .rays-wrap {
+      position: absolute;
+      inset: 0;
+      animation: sunRotate 12s linear infinite;
+    }
+
+    @keyframes sunRotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ============================================================
+       Responsive
+    ============================================================ */
+    @media (max-width: 600px) {
+      .weather-card {
+        flex-wrap: wrap;
+        padding: 14px 16px;
+        gap: 12px;
+      }
+
+      .weather-info {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .weather-robot {
+        width: 60px;
+        height: 60px;
+      }
+
+      .weather-desc {
+        flex-basis: 100%;
+        order: 3;
+        font-size: 13px;
+      }
+
+      .weather-temp {
+        font-size: 24px;
+      }
+    }
+
+    /* Hide scrollbar for carousel */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .scroll-cue-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 80px;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 90%);
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .scroll-cue-right.hidden {
+      opacity: 0;
+    }
+
+    /* MOBILE RESPONSIVE OVERRIDES */
+    @media (max-width: 1024px) {
+      .reminder-card {
+        position: relative !important;
+        right: auto !important;
+        top: auto !important;
+        margin-top: 20px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      .header-nav {
+        display: none !important;
+      }
+
+      .header-mobile-menu {
+        display: flex !important;
+      }
+
+      .search-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .header-account {
+        display: none !important;
+      }
+    }
+
+    .header-mobile-menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+    }
+
+    .ai-star-mask {
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>');
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>');
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+    }
+
+    @keyframes ai-sparkle-pulse {
+
+      0%,
+      100% {
+        transform: rotate(-8deg) scale(0.95);
+      }
+
+      50% {
+        transform: rotate(8deg) scale(1.05);
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+      }
+    }
+
+    @keyframes ai-sparkle-spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    /* ─── WEATHER CARD ─────────────────────────────────────── */
+    .wx-card-container {
+      display: none;
+      transition: all 0.3s ease;
+    }
+
+    .wx-card {
+      position: relative;
+      width: 100%;
+      min-height: 180px;
+      height: auto;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      color: #fff;
+      font-family: 'Inter', -apple-system, 'SF Pro Display', 'Segoe UI', sans-serif;
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .wx-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* PURE CSS BACKGROUNDS (REPLACING APPLE ASSETS) */
+    .bg-hot {
+      background: linear-gradient(145deg, #0d6ebd 0%, #3094d1 50%, #68b8e8 100%);
+    }
+
+    .bg-rain {
+      background: linear-gradient(150deg, #2b3a4a 0%, #4b5d6d 100%);
+    }
+
+    .bg-alert {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    /* CSS SUN & RAYS */
+    .css-sun {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 80px;
+      height: 80px;
+      background: #ffde00;
+      border-radius: 50%;
+      box-shadow: 0 0 30px #ff9d00, 0 0 60px rgba(255, 157, 0, 0.6), 0 0 100px rgba(255, 200, 0, 0.4);
+      animation: pulse-sun 4s infinite alternate;
+    }
+
+    .css-rays {
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 240px;
+      height: 240px;
+      background: repeating-conic-gradient(from 0deg, transparent 0deg 15deg, rgba(255, 255, 255, 0.15) 15deg 30deg);
+      border-radius: 50%;
+      -webkit-mask-image: radial-gradient(circle, black 20%, transparent 65%);
+      animation: spin-rays 40s linear infinite;
+    }
+
+    /* CSS CLOUDS */
+    .css-cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 100px;
+      width: 120px;
+      height: 35px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .css-cloud::before {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      top: -25px;
+      left: 15px;
+    }
+
+    .css-cloud::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      top: -35px;
+      right: 15px;
+    }
+
+    .css-cloud.dark {
+      background: rgba(130, 140, 150, 0.95);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .cloud-1 {
+      right: -10px;
+      top: 15px;
+      animation: float-cloud 8s ease-in-out infinite;
+      transform: scale(1.1);
+    }
+
+    .cloud-2 {
+      right: 70px;
+      top: 60px;
+      animation: float-cloud 12s ease-in-out infinite -4s;
+      transform: scale(0.8);
+      opacity: 0.8;
+    }
+
+
+
+    /* ─── NEW UI LAYOUT ───────────────────────────────── */
+    .wx-content {
+      position: relative;
+      z-index: 10;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .wx-layout-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .wx-temp-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wx-icon {
+      font-size: 36px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+    }
+
+    .wx-temp {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+      letter-spacing: -1px;
+      margin-top: 0;
+    }
+
+    .wx-loc-group {
+      text-align: right;
+    }
+
+    .wx-city {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      color: #fff;
+    }
+
+    .wx-subtitle {
+      font-size: 12px;
+      opacity: 0.8;
+      font-weight: 500;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+      margin-top: 0;
+    }
+
+    .wx-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.25);
+      margin-bottom: 14px;
+      width: 100%;
+      border: none;
+    }
+
+    .wx-layout-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex: 1;
+      padding-bottom: 4px;
+    }
+
+    .wx-text-group {
+      flex: 1;
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .wx-desc {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.45;
+      margin-bottom: 16px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+      color: #f0f0f0;
+    }
+
+    .wx-desc strong {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .wx-cta {
+      font-size: 14px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 8px 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wx-cta:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+    }
+
+    #wxBtn::after {
+      display: none !important;
+    }
+
+    /* Animations */
+    /* AI Sparkle Button Animations */
+    .ai-star-mask {
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>');
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>');
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+    }
+
+    @keyframes ai-sparkle-pulse {
+
+      0%,
+      100% {
+        transform: rotate(-8deg) scale(0.95);
+      }
+
+      50% {
+        transform: rotate(8deg) scale(1.05);
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+      }
+    }
+
+    @keyframes ai-sparkle-spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes ai-sparkle-pop-1 {
+
+      0%,
+      100% {
+        transform: translate(-8px, -8px) scale(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translate(-10px, -14px) scale(1) rotate(45deg);
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes ai-sparkle-pop-2 {
+
+      0%,
+      100% {
+        transform: translate(12px, -4px) scale(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translate(18px, -8px) scale(1) rotate(-30deg);
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes ai-sparkle-pop-3 {
+
+      0%,
+      100% {
+        transform: translate(-2px, 12px) scale(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translate(-5px, 18px) scale(1) rotate(60deg);
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes pulse-sun {
+      0% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: scale(1.05);
+        opacity: 1;
+        box-shadow: 0 0 50px #ff9d00, 0 0 80px rgba(255, 157, 0, 0.8), 0 0 120px rgba(255, 200, 0, 0.5);
+      }
+    }
+
+    @keyframes spin-rays {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes float-cloud {
+
+      0%,
+      100% {
+        margin-top: 0;
+      }
+
+      50% {
+        margin-top: -8px;
+      }
+    }
+
+    @keyframes rain-drop {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 15px 300px;
+      }
+    }
+
+    /* Apple Weather Keyframes */
+    @keyframes sunFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1)
+      }
+
+      50% {
+        transform: translateY(-9px) scale(1.04)
+      }
+    }
+
+    @keyframes sunGlow {
+
+      0%,
+      100% {
+        opacity: .85;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .95;
+        transform: scale(1.07)
+      }
+    }
+
+    @keyframes flarePop {
+
+      0%,
+      100% {
+        opacity: .3;
+        transform: scale(.95)
+      }
+
+      50% {
+        opacity: .55;
+        transform: scale(1.12)
+      }
+    }
+
+    @keyframes rayRotate {
+      from {
+        transform: rotate(0deg);
+        opacity: .18
+      }
+
+      to {
+        transform: rotate(360deg);
+        opacity: .22
+      }
+    }
+
+    /* Device Lists */
+    .dev-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dev-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .d-ico {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: #f0f4f8;
+    }
+
+    .d-info {
+      flex: 1;
+    }
+
+    .d-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .d-sub {
+      font-size: 12px;
+      color: #777;
+      margin-top: 2px;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .b-red {
+      background: #ffeceb;
+      color: #d63031;
+    }
+
+    .b-orange {
+      background: #fff3e0;
+      color: #e67e22;
+    }
+
+    .b-gray {
+      background: #f5f5f5;
+      color: #999;
+    }
+
+    /* Empty state */
+    .empty-state {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .empty-ico {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .empty-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 6px;
+    }
+
+    .empty-desc {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 16px;
+    }
+
+    .btn-primary {
+      background: #0d6ebd;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Fake Content block */
+    .dummy-content {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .dummy-line {
+      height: 12px;
+      background: #eee;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .dummy-line.short {
+      width: 60%;
+    }
+
+    .wx-bs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .wx-bs-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1F2933;
+      margin: 0;
+    }
+
+    .wx-bs-close {
+      width: 32px;
+      height: 32px;
+      background: #f5f7fa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+    }
+
+    .wx-bs-content {
+      overflow-y: auto;
+      flex: 1;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+    .wx-bs-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .wx-bs-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .wx-bs-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+    }
+
+    .wx-bs-btn-primary {
+      background: #0d6ebd;
+      color: #fff;
+    }
+
+    .wx-bs-btn-secondary {
+      background: #f5f7fa;
+      color: #4a5b78;
+    }
+
+    .wx-bs-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+    }
+    .wx-bs-item:last-child {
+      border-bottom: none;
+    }
+
+    .wx-bs-item-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #f9fafb;
+    }
+
+    .wx-bs-item-info {
+      flex: 1;
+    }
+
+    .wx-bs-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1F2933;
+      margin: 0 0 4px;
+    }
+
+    .wx-bs-item-status {
+      font-size: 12px;
+      color: #e74c3c;
+      margin: 0;
+    }
+    .wx-bs-item-status.warning {
+      color: #f39c12;
+    }
+    .wx-bs-item-status.normal {
+      color: #27ae60;
+    }
+
+    .wx-bs-radio {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #d1d5db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .wx-bs-item.selected .wx-bs-radio {
+      border-color: #0d6ebd;
+    }
+    .wx-bs-item.selected .wx-bs-radio::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: #0d6ebd;
+      border-radius: 50%;
+    }
+  </style>
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <div style="position:sticky;top:0;z-index:50;width:100%;height:82px;background:#082680;color:white;">
+    <div
+      style="max-width:1400px;margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between;"
+      class="px-4 lg:px-10">
+
+
+      <div class="header-mobile-menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </div>
+
+      <!-- Logo -->
+      <a href="#" style="flex-shrink:0;display:flex;align-items:center;">
+        <img src="https://cdnv2.tgdd.vn/webmwg/production-fe/tdm/static/images/Logo_ThoDMX.png" alt="Thợ Điện Máy XANH"
+          style="height:54px;width:auto;" />
+      </a>
+
+      <!-- Nav + Cart -->
+      <div style="display:flex;align-items:center;height:82px;" class="header-nav">
+        <a href="#" class="nav-item active">Trang chủ</a>
+        <a href="#" class="nav-item">Dịch vụ</a>
+        <a href="#" class="nav-item">Thiết bị</a>
+        <a href="#" class="nav-item">Hoạt động</a>
+        <a href="#" class="nav-item">Thông báo</a>
+        <a href="#" style="display:flex;align-items:center;padding:0 12px;height:82px;">
+          <img src="https://cdnv2.tgdd.vn/webmwg/production-fe/tdm/static/icons/icon_cart_outline_white.svg"
+            style="width:26px;height:26px;" />
+        </a>
+        <div style="width:1px;height:30px;background:rgba(255,255,255,.3);margin:0 4px;"></div>
+      </div>
+
+      <!-- Account + Location -->
+      <div style="display:flex;align-items:center;gap:10px;" class="header-account">
+        <div style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <div
+            style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <img src="https://cdnv2.tgdd.vn/webmwg/production-fe/tdm/static/icons/account.svg"
+              style="width:20px;height:20px;filter:brightness(0) invert(1);" />
+          </div>
+          <span
+            style="font-size:14px;font-weight:600;color:white;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Anh
+            Nguyễn Trọng Nhân</span>
+        </div>
+        <div
+          style="display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border-radius:8px;padding:6px 10px;cursor:pointer;max-width:265px;">
+          <img src="https://cdnv2.tgdd.vn/webmwg/production-fe/tdm/static/icons/icon_location_v2.svg"
+            style="width:16px;height:16px;flex-shrink:0;" />
+          <span
+            style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:185px;color:white;">Tòa
+            Nhà Mwg Công Ty Cổ Phần Thế Giới Di Động, 2 Đ. D1...</span>
+          <img src="https://cdnv2.tgdd.vn/webmwg/production-fe/tdm/static/icons/chevron_down.svg"
+            style="width:14px;height:14px;flex-shrink:0;filter:brightness(0) invert(1);" />
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BANNER ==================== -->
+  <div style="max-width:1400px;margin:24px auto 0;position: relative;" class="px-4 lg:px-10 flex flex-col lg:block">
+    <div style="border-radius:20px;overflow:hidden;position:relative;">
+
+      <!-- Clip container -->
+      <div id="clipWrap" style="overflow:hidden;width:100%;position:relative;">
+        <div id="trk" style="display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);width:100%;">
+
+          <!-- SLIDE 1: App Download -->
+          <div class="slide-item">
+            <img src="img/banner.webp" alt="Thợ Điện Máy XANH" style="width:100%;height:auto;display:block;" />
+          </div>
+
+        </div>
+        <div class="reminder-card">
+          <span class="border-glow" aria-hidden="true"></span>
+
+          <!-- Header -->
+          <div class="card-header">
+            <span class="header-icon" aria-hidden="true">
+              <div class="fancy-sparkle"
+                style="display:inline-block; width:18px; height:18px; flex-shrink:0; animation: ai-sparkle-pulse 2.5s ease-in-out infinite;">
+                <span style="
+          display: block; width: 100%; height: 100%; position: relative;
+          -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>');
+          -webkit-mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          -webkit-mask-position: center;
+          mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>');
+          mask-size: contain;
+          mask-repeat: no-repeat;
+          mask-position: center;
+        ">
+                  <span class="ai-star-mask" style="
+            position: absolute; inset: 0; overflow: hidden;
+          ">
+                    <span style="
+              position: absolute; left: -50%; top: -50%; width: 200%; height: 200%;
+              background: conic-gradient(from 0deg, #ff5a36 0deg, #e0f2fe 90deg, #007aff 180deg, #ffd700 270deg, #ff5a36 360deg);
+              animation: ai-sparkle-spin 3s linear infinite;
+            "></span>
+                  </span>
+                  <span style="
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%);
+            mix-blend-mode: screen;
+          "></span>
+                </span>
+              </div>
+            </span>
+            <h2 class="header-title"
+              style="font-weight: 900 !important; background-image: linear-gradient(90deg, #5b3fb8 0%, #c46dff 30%, #ffd0e8 50%, #c46dff 70%, #5b3fb8 100%) !important; background-size: 200% 100% !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; animation: titleShimmer 6s linear infinite reverse !important;">
+              Thợ DMX nhắc lịch thiết bị bảo dưỡng</h2>
+
+            <!-- ============================================================
+                 AI MASCOT — "DMX Bot"
+                 Premium redesign: distinctive helmet shape, layered glowing
+                 cyan eyes, circuit-board details, pulsing energy core &
+                 blinking ear LEDs. Fully animated, matches blue/purple theme.
+            ============================================================ -->
+            <div class="header-robot-wrap" aria-hidden="true">
+              <img src="img/thoDMX2-RGB-nobg.png" alt="Mascot Thợ ĐMX" class="header-robot mascot-static mascot-img">
+            </div>
+          </div>
+
+          <!-- List -->
+          <div class="reminder-list">
+            <div class="reminder-list-content" id="reminderListContent">
+              <!-- Item 1: Washing machine -->
+              <div class="reminder-item">
+                <div class="item-image">
+                  <svg viewBox="0 0 56 70" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="48" height="62" rx="4" fill="#1a1a1a" />
+                    <rect x="8" y="9" width="40" height="6" rx="1" fill="#2a2a2a" />
+                    <circle cx="14" cy="12" r="1.2" fill="#6aa9ff" />
+                    <circle cx="20" cy="12" r="1.2" fill="#444" />
+                    <circle cx="26" cy="12" r="1.2" fill="#444" />
+                    <circle cx="28" cy="40" r="18" fill="#0a0a0a" stroke="#444" stroke-width="1.5" />
+                    <circle cx="28" cy="40" r="13" fill="#1a1a1a" />
+                    <circle cx="28" cy="40" r="10" fill="#222" opacity="0.6" />
+                    <circle cx="28" cy="40" r="2" fill="#666" />
+                  </svg>
+                </div>
+                <div class="item-content">
+                  <p class="item-title">Samsung Inverter 10 Kg WW10TP44DSH/SV</p>
+                  <p class="item-meta">Có khuyến cáo vệ sinh vào ngày <span class="highlight">20/06/2026</span></p>
+                </div>
+                <div class="btn-group"
+                  style="grid-row: 2 / 3; grid-column: 2 / 3; justify-self: end; display: flex; gap: 8px; align-items: center; margin-top: 4px;">
+                  <button type="button"
+                    onclick="event.stopPropagation(); this.closest('.reminder-item').style.display='none'"
+                    style="padding: 4px 12px; font-size: 13px; height: 28px; border-radius: 999px; border: 1px solid #d1d5db; background-color: white; color: #4b5563; font-weight: 500; cursor: pointer; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#f9fafb'"
+                    onmouseout="this.style.backgroundColor='white'">Nhắc tôi sau</button>
+                  <button class="ai-btn" type="button"
+                    style="margin-top: 0; padding: 4px 12px; font-size: 13px; height: 28px;">
+                    <div class="fancy-sparkle"
+                      style="display:inline-block; width:14px; height:14px; flex-shrink:0; animation: ai-sparkle-pulse 2.5s ease-in-out infinite;">
+                      <span
+                        style="display: block; width: 100%; height: 100%; position: relative; -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;">
+                        <span class="ai-star-mask" style="position: absolute; inset: 0; overflow: hidden;">
+                          <span
+                            style="position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff5a36 0deg, #e0f2fe 90deg, #007aff 180deg, #ffd700 270deg, #ff5a36 360deg); animation: ai-sparkle-spin 3s linear infinite;"></span>
+                        </span>
+                        <span
+                          style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%); mix-blend-mode: screen;"></span>
+                      </span>
+                    </div>
+                    <span class="label">Đặt lịch</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 2: Refrigerator -->
+              <div class="reminder-item">
+                <div class="item-image">
+                  <svg viewBox="0 0 56 70" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="6" y="3" width="44" height="64" rx="4" fill="#f5f5f5" stroke="#ddd" stroke-width="1" />
+                    <rect x="6" y="3" width="22" height="64" fill="#1a1a1a" />
+                    <rect x="28" y="3" width="22" height="64" fill="#fafafa" />
+                    <line x1="28" y1="3" x2="28" y2="67" stroke="#bbb" stroke-width="0.5" />
+                    <rect x="10" y="10" width="2" height="14" rx="1" fill="#666" />
+                    <rect x="44" y="10" width="2" height="14" rx="1" fill="#999" />
+                  </svg>
+                </div>
+                <div class="item-content">
+                  <p class="item-title">Tủ lạnh Samsung Inverter 280 lít</p>
+                  <p class="item-meta">Có khuyến cáo vệ sinh vào ngày <span class="highlight">22/06/2026</span></p>
+                </div>
+                <div class="btn-group"
+                  style="grid-row: 2 / 3; grid-column: 2 / 3; justify-self: end; display: flex; gap: 8px; align-items: center; margin-top: 4px;">
+                  <button type="button"
+                    onclick="event.stopPropagation(); this.closest('.reminder-item').style.display='none'"
+                    style="padding: 4px 12px; font-size: 13px; height: 28px; border-radius: 999px; border: 1px solid #d1d5db; background-color: white; color: #4b5563; font-weight: 500; cursor: pointer; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#f9fafb'"
+                    onmouseout="this.style.backgroundColor='white'">Nhắc tôi sau</button>
+                  <button class="ai-btn" type="button"
+                    style="margin-top: 0; padding: 4px 12px; font-size: 13px; height: 28px;">
+                    <div class="fancy-sparkle"
+                      style="display:inline-block; width:14px; height:14px; flex-shrink:0; animation: ai-sparkle-pulse 2.5s ease-in-out infinite;">
+                      <span
+                        style="display: block; width: 100%; height: 100%; position: relative; -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;">
+                        <span class="ai-star-mask" style="position: absolute; inset: 0; overflow: hidden;">
+                          <span
+                            style="position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff5a36 0deg, #e0f2fe 90deg, #007aff 180deg, #ffd700 270deg, #ff5a36 360deg); animation: ai-sparkle-spin 3s linear infinite;"></span>
+                        </span>
+                        <span
+                          style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%); mix-blend-mode: screen;"></span>
+                      </span>
+                    </div>
+                    <span class="label">Đặt lịch</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 3: Water purifier -->
+              <div class="reminder-item">
+                <div class="item-image">
+                  <svg viewBox="0 0 56 70" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="4" width="36" height="62" rx="4" fill="#eef4ff" stroke="#cdd9ee" stroke-width="1" />
+                    <rect x="14" y="10" width="28" height="20" rx="2" fill="#ffeaa0" />
+                    <text x="28" y="18" text-anchor="middle" font-size="5" font-weight="700" fill="#d04545">ĐẶC</text>
+                    <text x="28" y="24" text-anchor="middle" font-size="5" font-weight="700" fill="#d04545">BIỆT</text>
+                    <circle cx="20" cy="40" r="2" fill="#7ac6ff" />
+                    <circle cx="28" cy="40" r="2" fill="#7ac6ff" />
+                    <circle cx="36" cy="40" r="2" fill="#7ac6ff" />
+                    <circle cx="20" cy="48" r="2" fill="#cfe2ff" />
+                    <circle cx="28" cy="48" r="2" fill="#cfe2ff" />
+                    <circle cx="36" cy="48" r="2" fill="#cfe2ff" />
+                    <rect x="16" y="56" width="24" height="6" rx="1" fill="#d8e4f7" />
+                  </svg>
+                </div>
+                <div class="item-content">
+                  <p class="item-title">Máy lọc nước RO nóng nguội Karofi</p>
+                  <p class="item-meta">Có khuyến cáo vệ sinh vào ngày <span class="highlight">25/06/2026</span></p>
+                </div>
+                <div class="btn-group"
+                  style="grid-row: 2 / 3; grid-column: 2 / 3; justify-self: end; display: flex; gap: 8px; align-items: center; margin-top: 4px;">
+                  <button type="button"
+                    onclick="event.stopPropagation(); this.closest('.reminder-item').style.display='none'"
+                    style="padding: 4px 12px; font-size: 13px; height: 28px; border-radius: 999px; border: 1px solid #d1d5db; background-color: white; color: #4b5563; font-weight: 500; cursor: pointer; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#f9fafb'"
+                    onmouseout="this.style.backgroundColor='white'">Nhắc tôi sau</button>
+                  <button class="ai-btn" type="button"
+                    style="margin-top: 0; padding: 4px 12px; font-size: 13px; height: 28px;">
+                    <div class="fancy-sparkle"
+                      style="display:inline-block; width:14px; height:14px; flex-shrink:0; animation: ai-sparkle-pulse 2.5s ease-in-out infinite;">
+                      <span
+                        style="display: block; width: 100%; height: 100%; position: relative; -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;">
+                        <span class="ai-star-mask" style="position: absolute; inset: 0; overflow: hidden;">
+                          <span
+                            style="position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff5a36 0deg, #e0f2fe 90deg, #007aff 180deg, #ffd700 270deg, #ff5a36 360deg); animation: ai-sparkle-spin 3s linear infinite;"></span>
+                        </span>
+                        <span
+                          style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%); mix-blend-mode: screen;"></span>
+                      </span>
+                    </div>
+                    <span class="label">Đặt lịch</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 4: Air Conditioner -->
+              <div class="reminder-item">
+                <div class="item-image">
+                  <svg viewBox="0 0 56 70" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="6" y="16" width="44" height="20" rx="3" fill="#f5f5f5" stroke="#ccc" stroke-width="1" />
+                    <rect x="10" y="24" width="36" height="8" rx="1" fill="#222" />
+                    <line x1="12" y1="28" x2="44" y2="28" stroke="#444" stroke-width="0.5" />
+                    <circle cx="44" cy="20" r="1.5" fill="#6aa9ff" />
+                  </svg>
+                </div>
+                <div class="item-content">
+                  <p class="item-title">Máy lạnh Daikin Inverter 1 HP</p>
+                  <p class="item-meta"><span class="highlight">Khuyến cáo bảo dưỡng</span></p>
+                </div>
+                <div class="btn-group"
+                  style="grid-row: 2 / 3; grid-column: 2 / 3; justify-self: end; display: flex; gap: 8px; align-items: center; margin-top: 4px;">
+                  <button type="button"
+                    onclick="event.stopPropagation(); this.closest('.reminder-item').style.display='none'"
+                    style="padding: 4px 12px; font-size: 13px; height: 28px; border-radius: 999px; border: 1px solid #d1d5db; background-color: white; color: #4b5563; font-weight: 500; cursor: pointer; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#f9fafb'"
+                    onmouseout="this.style.backgroundColor='white'">Nhắc tôi sau</button>
+                  <button class="ai-btn" type="button"
+                    style="margin-top: 0; padding: 4px 12px; font-size: 13px; height: 28px;">
+                    <div class="fancy-sparkle"
+                      style="display:inline-block; width:14px; height:14px; flex-shrink:0; animation: ai-sparkle-pulse 2.5s ease-in-out infinite;">
+                      <span
+                        style="display: block; width: 100%; height: 100%; position: relative; -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;">
+                        <span class="ai-star-mask" style="position: absolute; inset: 0; overflow: hidden;">
+                          <span
+                            style="position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff5a36 0deg, #e0f2fe 90deg, #007aff 180deg, #ffd700 270deg, #ff5a36 360deg); animation: ai-sparkle-spin 3s linear infinite;"></span>
+                        </span>
+                        <span
+                          style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%); mix-blend-mode: screen;"></span>
+                      </span>
+                    </div>
+                    <span class="label">Đặt lịch</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 5: TV -->
+              <div class="reminder-item">
+                <div class="item-image">
+                  <svg viewBox="0 0 56 70" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="15" width="48" height="28" rx="2" fill="#2a2a2a" />
+                    <rect x="6" y="17" width="44" height="24" fill="#111" />
+                    <!-- Screen reflection -->
+                    <polygon points="6,17 26,17 6,35" fill="#fff" opacity="0.05" />
+                    <!-- Stand -->
+                    <path d="M24 43 L28 39 L32 43 Z" fill="#444" />
+                    <rect x="20" y="43" width="16" height="2" rx="1" fill="#444" />
+                  </svg>
+                </div>
+                <div class="item-content">
+                  <p class="item-title">Smart Tivi Samsung 4K 55 inch</p>
+                  <p class="item-meta"><span class="highlight">Khuyến cáo bảo dưỡng</span></p>
+                </div>
+                <div class="btn-group"
+                  style="grid-row: 2 / 3; grid-column: 2 / 3; justify-self: end; display: flex; gap: 8px; align-items: center; margin-top: 4px;">
+                  <button type="button"
+                    onclick="event.stopPropagation(); this.closest('.reminder-item').style.display='none'"
+                    style="padding: 4px 12px; font-size: 13px; height: 28px; border-radius: 999px; border: 1px solid #d1d5db; background-color: white; color: #4b5563; font-weight: 500; cursor: pointer; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#f9fafb'"
+                    onmouseout="this.style.backgroundColor='white'">Nhắc tôi sau</button>
+                  <button class="ai-btn" type="button"
+                    style="margin-top: 0; padding: 4px 12px; font-size: 13px; height: 28px;">
+                    <div class="fancy-sparkle"
+                      style="display:inline-block; width:14px; height:14px; flex-shrink:0; animation: ai-sparkle-pulse 2.5s ease-in-out infinite;">
+                      <span
+                        style="display: block; width: 100%; height: 100%; position: relative; -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;">
+                        <span class="ai-star-mask" style="position: absolute; inset: 0; overflow: hidden;">
+                          <span
+                            style="position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff5a36 0deg, #e0f2fe 90deg, #007aff 180deg, #ffd700 270deg, #ff5a36 360deg); animation: ai-sparkle-spin 3s linear infinite;"></span>
+                        </span>
+                        <span
+                          style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%); mix-blend-mode: screen;"></span>
+                      </span>
+                    </div>
+                    <span class="label">Đặt lịch</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <!-- Scroll Cue Indicator -->
+            <div class="scroll-cue" id="scrollCue">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          document.querySelectorAll('.ai-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+              const rect = btn.getBoundingClientRect();
+              const ripple = document.createElement('span');
+              const size = Math.max(rect.width, rect.height);
+              ripple.className = 'ripple';
+              ripple.style.width = ripple.style.height = size + 'px';
+              ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+              ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+              btn.appendChild(ripple);
+              setTimeout(() => ripple.remove(), 600);
+              const product = btn.closest('.reminder-item').querySelector('.item-title').textContent;
+              console.log('Đặt lịch cho:', product);
+            });
+          });
+
+          // Hide scroll cue when scrolled to bottom
+          const reminderContent = document.getElementById('reminderListContent');
+          const scrollCue = document.getElementById('scrollCue');
+
+          if (reminderContent && scrollCue) {
+            reminderContent.addEventListener('scroll', () => {
+              // If scrolled near bottom (within 10px), hide cue
+              if (reminderContent.scrollTop + reminderContent.clientHeight >= reminderContent.scrollHeight - 10) {
+                scrollCue.classList.add('hidden');
+              } else {
+                scrollCue.classList.remove('hidden');
+              }
+            });
+          }
+        </script>
+
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1400px;margin:24px auto 0;" class="px-4 lg:px-10">
+    <!-- ============================================================
+         VARIANT 1: HOT / SUNNY
+    ============================================================ -->
+    <!-- DYNAMIC WEATHER CARD -->
+      <div id="wxContainer" class="wx-card-container" style="display: block;">
+        <div class="wx-card" id="wxCard">
+          <!-- CSS Backgrounds injected here -->
+          <div id="wxBg" class="wx-bg bg-hot">
+      <img src="img/03_minimalist_unsplash_zjoydJb17mE.webp" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
+      <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 100%); z-index: 1;"></div>
+      
+      <!-- Apple Sun Effect (Centered to match background image) -->
+      <div class="apple-sun-container" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width:140px; height:140px; z-index:2; pointer-events:none;">
+          <!-- Sun rays -->
+          <div style="
+            position: absolute;
+            width:340px;height:340px;
+            top:-100px;left:-100px;
+            opacity:.18;
+            animation:rayRotate 30s linear infinite;
+            background: 
+              repeating-conic-gradient(from 0deg, rgba(255,255,255,0) 0deg, rgba(255,255,255,0.5) 10deg, rgba(255,255,255,0) 20deg),
+              repeating-conic-gradient(from 15deg, rgba(255,255,255,0) 0deg, rgba(255,255,255,0.3) 14deg, rgba(255,255,255,0) 28deg),
+              repeating-conic-gradient(from 5deg, rgba(255,255,255,0) 0deg, rgba(255,255,255,0.2) 6deg, rgba(255,255,255,0) 12deg);
+            mix-blend-mode: screen;
+            -webkit-mask-image: radial-gradient(circle, transparent 20%, black 40%, transparent 70%);
+            mask-image: radial-gradient(circle, transparent 20%, black 40%, transparent 70%);
+          "></div>
+          <!-- Main sun (REMOVED: The background image already has a natural sun) -->
+          <!-- Secondary sun (screen blend) -->
+          <div style="
+            position: absolute;
+            width:105px;height:105px;
+            top:17px;left:17px;
+            opacity:.5;
+            mix-blend-mode:screen;
+            animation:sunGlow 8s ease-in-out infinite;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(150, 220, 255, 0.8) 0%, transparent 70%);
+          "></div>
+          <!-- Lens flare wrapper (animates opacity & scale) -->
+          <div style="
+            position: absolute;
+            width:88px;height:88px;
+            top:26px;left:26px;
+            opacity:.4;
+            mix-blend-mode:screen;
+            animation:flarePop 4s ease-in-out infinite;
+          ">
+             <!-- Inner flare (rotates and stretches) -->
+             <div style="width:100%; height:100%; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(100, 255, 200, 0.8) 0%, transparent 70%); transform: rotate(-45deg) scaleX(2.5) scaleY(0.2);"></div>
+          </div>
+      </div>
+    </div>
+
+          <div class="wx-content">
+            <div class="wx-layout-top">
+              <div class="wx-temp-group">
+                <span id="wxTemp" class="wx-temp">39°C</span>
+              </div>
+              <div class="wx-loc-group">
+                <div class="wx-city">📍 Thủ Đức, TP.Hồ Chí Minh</div>
+                <div id="wxSub" class="wx-subtitle">Cập nhật lúc 10:30 hôm nay</div>
+              </div>
+            </div>
+
+            <!-- <div class="wx-divider"></div> -->
+
+            <div class="wx-layout-bottom">
+              <div class="wx-text-group">
+                <div id="wxDesc" class="wx-desc">
+                  Phát hiện thời tiết nóng tại khu vực của bạn, phù hợp vệ sinh máy lạnh để <strong>làm lạnh tốt
+                    hơn</strong> và <strong>tiết kiệm điện hơn</strong>!
+                </div>
+                <button id="wxBtn" class="wx-cta ai-btn" onclick="toggleDeviceList()">
+                  <div class="fancy-sparkle" style="display:inline-block; width:18px; height:18px; flex-shrink:0; animation: ai-sparkle-pulse 2.5s ease-in-out infinite;">
+                    <span style="display: block; width: 100%; height: 100%; position: relative; -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('data:image/svg+xml;utf8,<svg viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z%22/></svg>'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;">
+                      <span class="ai-star-mask" style="position: absolute; inset: 0; overflow: hidden;">
+                        <span style="position: absolute; left: -50%; top: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff5a36 0deg, #e0f2fe 90deg, #007aff 180deg, #ffd700 270deg, #ff5a36 360deg); animation: ai-sparkle-spin 3s linear infinite;"></span>
+                      </span>
+                      <span style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 50%); mix-blend-mode: screen;"></span>
+                    </span>
+                  </div>
+                  Xem gợi ý từ Thợ DMX
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+
+  </div>
+
+  <!-- Popup device list (OUTSIDE weather card for proper z-index) -->
+  <div class="device-popup-backdrop" id="deviceBackdrop" onclick="closeDevicePopup()"></div>
+  <div class="device-popup" id="devicePopup" style="padding: 20px 16px; max-height: 85vh; display: flex; flex-direction: column;">
+    <div class="wx-bs-header">
+      <h3 class="wx-bs-title">Đặt lịch bảo dưỡng thiết bị</h3>
+      <button class="wx-bs-close" onclick="closeDevicePopup()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 1L1 13M1 1L13 13" stroke="#4A5B78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="wx-bs-content">
+      <!-- Item 1: Overdue -->
+      <div class="wx-bs-item selected" onclick="document.querySelectorAll('#devicePopup .wx-bs-item').forEach(i => i.classList.remove('selected')); this.classList.add('selected');">
+        <img src="img/gree-gwc09pb-k3d0p4-550x160.jpg" class="wx-bs-item-img" alt="Máy lạnh" />
+        <div class="wx-bs-item-info">
+          <p class="wx-bs-item-name">Máy lạnh Gree GWC09PB-K3D0P4</p>
+          <p class="wx-bs-item-status">Có khuyến cáo vệ sinh vào ngày 20/04/2026</p>
+        </div>
+        <div class="wx-bs-radio"></div>
+      </div>
+      <!-- Item 2: Soon -->
+      <div class="wx-bs-item" onclick="document.querySelectorAll('#devicePopup .wx-bs-item').forEach(i => i.classList.remove('selected')); this.classList.add('selected');">
+        <img src="img/80705-min-600x600.jpg" class="wx-bs-item-img" alt="Máy lạnh" />
+        <div class="wx-bs-item-info">
+          <p class="wx-bs-item-name">Máy lạnh treo tường (Chưa rõ model)</p>
+          <p class="wx-bs-item-status warning">Có khuyến cáo vệ sinh vào ngày 29/06/2026</p>
+        </div>
+        <div class="wx-bs-radio"></div>
+      </div>
+      <!-- Item 3: Weather match, not due yet -->
+      <div class="wx-bs-item" onclick="document.querySelectorAll('#devicePopup .wx-bs-item').forEach(i => i.classList.remove('selected')); this.classList.add('selected');">
+        <img src="img/panasonic-nr-ba190ppvn-300x300.jpg" class="wx-bs-item-img" alt="Tủ lạnh" />
+        <div class="wx-bs-item-info">
+          <p class="wx-bs-item-name">Tủ lạnh Samsung Inverter 280 lít</p>
+          <p class="wx-bs-item-status normal">Có khuyến cáo vệ sinh vào ngày 20/08/2026</p>
+        </div>
+        <div class="wx-bs-radio"></div>
+      </div>
+    </div>
+    <div class="wx-bs-actions">
+      <button class="wx-bs-btn wx-bs-btn-secondary" onclick="closeDevicePopup()">Nhắc tôi sau</button>
+      <button class="wx-bs-btn wx-bs-btn-primary" onclick="window.location.href='gio-hang.html'">Đặt lịch ngay</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleDeviceList() {
+      const popup = document.getElementById('devicePopup');
+      const backdrop = document.getElementById('deviceBackdrop');
+      const toggle = document.getElementById('devicesToggle');
+      popup.classList.add('open');
+      backdrop.classList.add('open');
+      toggle.classList.add('open');
+    }
+    function closeDevicePopup() {
+      const popup = document.getElementById('devicePopup');
+      const backdrop = document.getElementById('deviceBackdrop');
+      const toggle = document.getElementById('devicesToggle');
+      popup.classList.remove('open');
+      backdrop.classList.remove('open');
+      toggle.classList.remove('open');
+    }
+  </script>
+
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const wxBtn = document.getElementById('wxBtn');
+      const wxBottomSheetOverlay = document.getElementById('wxBottomSheetOverlay');
+      const wxBottomSheet = document.getElementById('wxBottomSheet');
+      const wxBsClose = document.getElementById('wxBsClose');
+      const wxBsLater = document.getElementById('wxBsLater');
+
+      if (wxBtn && wxBottomSheetOverlay && wxBottomSheet) {
+          function openWxBottomSheet() {
+              wxBottomSheetOverlay.classList.add('active');
+              wxBottomSheet.classList.add('active');
+          }
+          function closeWxBottomSheet() {
+              wxBottomSheetOverlay.classList.remove('active');
+              wxBottomSheet.classList.remove('active');
+          }
+          // wxBtn.addEventListener('click', function(e) {
+          //     e.preventDefault();
+          //     e.stopPropagation();
+          //     openWxBottomSheet();
+          // });
+          wxBsClose.addEventListener('click', closeWxBottomSheet);
+          wxBsLater.addEventListener('click', closeWxBottomSheet);
+          wxBottomSheetOverlay.addEventListener('click', closeWxBottomSheet);
+      }
+    });
+  </script>
+</body>
+
+</html>
